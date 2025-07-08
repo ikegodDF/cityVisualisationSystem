@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>cesium</title>
+    <script src="node_modules/cesium/Build/Cesium/Cesium.js"></script>
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      href="node_modules/cesium/Build/Cesium/Widgets/widgets.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <!--ボタン配置について-->
+    <link rel="stylesheet" href="button.css" />
+    <!-- 年代凡例 -->
+    <link rel="stylesheet" href="ui.css" />
+  </head>
+  <body>
+    <div id="CesiumContainer" style="width: 100%; height: 100%"></div>
+
+    <div id="legend">
+      <h3>年代スケール</h3>
+      <ul>
+        <li>
+          <span class="legend-color" style="background-color: #8bc34a"></span
+          >築0~5年
+        </li>
+        <li>
+          <span class="legend-color" style="background-color: #a5d6a7"></span
+          >築6~15年
+        </li>
+        <li>
+          <span class="legend-color" style="background-color: #ffeb3b"></span
+          >築16~25年
+        </li>
+        <li>
+          <span class="legend-color" style="background-color: #ff9800"></span
+          >築26~35年
+        </li>
+        <li>
+          <span class="legend-color" style="background-color: #f44336"></span
+          >築36~45年
+        </li>
+        <li>
+          <span class="legend-color" style="background-color: #b71c1c"></span
+          >築46~年
+        </li>
+        <li>
+          <span class="legend-color" style="background-color: #1976d2"></span
+          >年度データなし
+        </li>
+      </ul>
+
+      <!-- 浸水深スケール -->
+      <div id="thunami-scale" style="display: none">
+        <h3>浸水深スケール</h3>
+        <ul>
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #00ff00"
+            ></span
+            >~0.01m
+          </li>
+          <!-- 緑 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #33cc00"
+            ></span
+            >0.01~0.3m
+          </li>
+          <!-- 緑より薄い -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #66aa00"
+            ></span
+            >0.3~1.0m
+          </li>
+          <!-- 黄緑 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #999900"
+            ></span
+            >1.0~2.0m
+          </li>
+          <!-- 黄土色 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #cc6600"
+            ></span
+            >2.0~4.0m
+          </li>
+          <!-- オレンジ茶 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #ff3300"
+            ></span
+            >4.0~6.0m
+          </li>
+          <!-- 明るい赤 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #ff6600"
+            ></span
+            >6.0~8.0m
+          </li>
+          <!-- 濃い赤 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #ff0000"
+            ></span
+            >8.0~10.0m
+          </li>
+          <!-- 赤 -->
+          <li>
+            <span
+              class="legend-color_mesh"
+              style="background-color: #800000"
+            ></span
+            >10.0~m
+          </li>
+          <!-- 濃い赤 -->
+        </ul>
+      </div>
+
+      <!-- 震度スケール -->
+      <div id="sindo-scale" style="display: none">
+        <h3>震度スケール</h3>
+        <ul>
+          <li>
+            <span class="legend-color" style="background-color: #00ff00"></span
+            >震度1
+          </li>
+          <!-- 緑 -->
+          <li>
+            <span class="legend-color" style="background-color: #33cc00"></span
+            >震度2
+          </li>
+          <!-- 薄い緑 -->
+          <li>
+            <span class="legend-color" style="background-color: #66aa00"></span
+            >震度3
+          </li>
+          <!-- 少し濃い緑 -->
+          <li>
+            <span class="legend-color" style="background-color: #999900"></span
+            >震度4
+          </li>
+          <!-- 鮮やかな緑 -->
+          <li>
+            <span class="legend-color" style="background-color: #cc6600"></span
+            >震度5弱
+          </li>
+          <!-- 黄色 -->
+          <li>
+            <span class="legend-color" style="background-color: #ff3300"></span
+            >震度5強
+          </li>
+          <!-- 黄土色 -->
+          <li>
+            <span class="legend-color" style="background-color: #ff6600"></span
+            >震度6弱
+          </li>
+          <!-- オレンジ -->
+          <li>
+            <span class="legend-color" style="background-color: #ff0000"></span
+            >震度6強
+          </li>
+          <!-- 濃いオレンジ -->
+          <li>
+            <span class="legend-color" style="background-color: #800000"></span
+            >震度7
+          </li>
+          <!-- 赤 -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- <div class="slider-wrapper">
+  <div id="slider" class="slider-button">
+      <span>分布なし</span>
+      <div class="slider-indicator"></div>
+  </div>
+</div> -->
+
+    <!-- ボタンを追加 -->
+    <button id="runDemolitionRevival" disabled>5年後</button>
+    <button id="undoButton" disabled>5年前</button>
+    <button id="futurePrediction">予測を行う</button>
+    <button id="thunamiPrediction">津波被害</button>
+    <button id="changeModel">施策適用</button>
+    <button id="earthquakePrediction">地震被害</button>
+    <!-- 解析利用 -->
+    <!-- <button id="kaisekibutton">将来建物被害解析</button> -->
+    <!-- スクショ -->
+    <button id="screenshotButton">スクショ</button>
+
+    <!--cesiumの呼び出し-->
+
+    <!--カメラの初期設定-->
+    <script src="function/main.js"></script>
+
+    <!--むかわ町3Dモデルの呼び出し-->
+    <script src="function/mukawa3D.js"></script>
+
+    <!--将来予測関数-->
+    <script src="function/futurePrediction.js"></script>
+
+    <!-- 地震被害反映関数 -->
+    <script src="function/zisinhigai.js"></script>
+
+    <!-- 津波被害反映関数 -->
+    <script src="function/thunamihigai.js"></script>
+
+    <!-- 都市計画反映関数 -->
+
+    <!--予測結果の表示(ボタンイベント)-->
+    <script src="function/buttonevent.js"></script>
+
+    <!-- 分布読み取り -->
+    <script src="function/thunami.js"></script>
+    <script src="function/sindobunpu.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="function/screenShot.js"></script>
+    <!-- <script src="未使用js/PLATEAU.js"></script> -->
+  </body>
+</html>
