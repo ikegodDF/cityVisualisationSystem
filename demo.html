@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="データ可視化システム デモページ" />
+    <title>データ可視化システム - デモ</title>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.3s;
+      }
+
+      .nav-links a:hover {
+        opacity: 0.8;
+      }
+
+      .back-button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 0.5rem 1rem;
+        border: 1px solid white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .back-button:hover {
+        background: white;
+        color: #667eea;
+      }
+
+      /* Demo Header */
+      .demo-header {
+        background: white;
+        padding: 2rem 0;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .demo-header h1 {
+        font-size: 2.5rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+      }
+
+      .demo-header p {
+        font-size: 1.1rem;
+        color: #666;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Demo Controls */
+      .demo-controls {
+        background: white;
+        padding: 2rem;
+        margin: 2rem 0;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .controls-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        align-items: end;
+      }
+
+      .control-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .control-group label {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+      }
+
+      .control-group select,
+      .control-group input {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .control-group button {
+        background: #667eea;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .control-group button:hover {
+        background: #5a6fd8;
+      }
+
+      /* Charts Container */
+      .charts-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .chart-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .chart-title {
+        font-size: 1.3rem;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 300px;
+      }
+
+      /* Real-time Data Display */
+      .realtime-data {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        margin: 2rem 0;
+      }
+
+      .data-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+
+      .data-item {
+        text-align: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+      }
+
+      .data-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #667eea;
+      }
+
+      .data-label {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+      }
+
+      /* Status Indicators */
+      .status-indicators {
+        display: flex;
+        gap: 1rem;
+        margin: 1rem 0;
+        flex-wrap: wrap;
+      }
+
+      .status-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: #e8f5e8;
+        border-radius: 20px;
+        font-size: 0.9rem;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #28a745;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Footer */
+      .footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 4rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .charts-container {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <a href="index.html" class="logo">データ可視化システム</a>
+          <ul class="nav-links">
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="index.html#overview">概要</a></li>
+            <li><a href="index.html#features">機能</a></li>
+            <li><a href="index.html#tech">技術</a></li>
+          </ul>
+          <a href="index.html" class="back-button">← ホームに戻る</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Demo Header -->
+    <section class="demo-header">
+      <div class="container">
+        <h1>システムデモンストレーション</h1>
+        <p>
+          実際のデータ可視化システムの動作を体験してください。リアルタイムでデータが更新され、様々なチャートで可視化されます。
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Demo Content -->
+    <main class="main">
+      <div class="container">
+        <!-- Demo Controls -->
+        <section class="demo-controls">
+          <h3 style="margin-bottom: 1rem; color: #2c3e50">デモ設定</h3>
+          <div class="controls-grid">
+            <div class="control-group">
+              <label for="chartType">チャートタイプ</label>
+              <select id="chartType">
+                <option value="line">折れ線グラフ</option>
+                <option value="bar">棒グラフ</option>
+                <option value="pie">円グラフ</option>
+                <option value="doughnut">ドーナツグラフ</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="dataSpeed">更新速度</label>
+              <select id="dataSpeed">
+                <option value="1000">1秒</option>
+                <option value="2000">2秒</option>
+                <option value="5000">5秒</option>
+              </select>
+            </div>
+            <div class="control-group">
+              <label for="dataPoints">データポイント数</label>
+              <input
+                type="number"
+                id="dataPoints"
+                value="10"
+                min="5"
+                max="50"
+              />
+            </div>
+            <div class="control-group">
+              <button onclick="startDemo()">デモ開始</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Status Indicators -->
+        <div class="status-indicators">
+          <div class="status-item">
+            <div class="status-dot"></div>
+            <span>システム稼働中</span>
+          </div>
+          <div class="status-item">
+            <div class="status-dot"></div>
+            <span>データ受信中</span>
+          </div>
+          <div class="status-item">
+            <div class="status-dot"></div>
+            <span>リアルタイム更新</span>
+          </div>
+        </div>
+
+        <!-- Real-time Data Display -->
+        <section class="realtime-data">
+          <h3 style="margin-bottom: 1rem; color: #2c3e50">
+            リアルタイムデータ
+          </h3>
+          <div class="data-grid">
+            <div class="data-item">
+              <div class="data-value" id="currentValue">0</div>
+              <div class="data-label">現在値</div>
+            </div>
+            <div class="data-item">
+              <div class="data-value" id="averageValue">0</div>
+              <div class="data-label">平均値</div>
+            </div>
+            <div class="data-item">
+              <div class="data-value" id="maxValue">0</div>
+              <div class="data-label">最大値</div>
+            </div>
+            <div class="data-item">
+              <div class="data-value" id="minValue">0</div>
+              <div class="data-label">最小値</div>
+            </div>
+            <div class="data-item">
+              <div class="data-value" id="updateCount">0</div>
+              <div class="data-label">更新回数</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Charts -->
+        <section class="charts-container">
+          <div class="chart-card">
+            <h3 class="chart-title">リアルタイムデータ可視化</h3>
+            <div class="chart-container">
+              <canvas id="mainChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">データ分布</h3>
+            <div class="chart-container">
+              <canvas id="distributionChart"></canvas>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 データ可視化システム. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // グローバル変数
+      let mainChart, distributionChart;
+      let dataInterval;
+      let dataArray = [];
+      let updateCount = 0;
+
+      // ページ読み込み時の初期化
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeCharts();
+        startDemo();
+      });
+
+      // チャートの初期化
+      function initializeCharts() {
+        // メインチャート
+        const mainCtx = document.getElementById("mainChart").getContext("2d");
+        mainChart = new Chart(mainCtx, {
+          type: "line",
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: "リアルタイムデータ",
+                data: [],
+                borderColor: "#667eea",
+                backgroundColor: "rgba(102, 126, 234, 0.1)",
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+            animation: {
+              duration: 750,
+              easing: "easeInOutQuart",
+            },
+          },
+        });
+
+        // 分布チャート
+        const distCtx = document
+          .getElementById("distributionChart")
+          .getContext("2d");
+        distributionChart = new Chart(distCtx, {
+          type: "doughnut",
+          data: {
+            labels: ["低", "中", "高"],
+            datasets: [
+              {
+                data: [0, 0, 0],
+                backgroundColor: ["#ff6b6b", "#feca57", "#48dbfb"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+              },
+            },
+          },
+        });
+      }
+
+      // デモ開始
+      function startDemo() {
+        // 既存のインターバルをクリア
+        if (dataInterval) {
+          clearInterval(dataInterval);
+        }
+
+        // 設定値を取得
+        const speed = parseInt(document.getElementById("dataSpeed").value);
+        const dataPoints = parseInt(
+          document.getElementById("dataPoints").value
+        );
+        const chartType = document.getElementById("chartType").value;
+
+        // データ配列をリセット
+        dataArray = [];
+        updateCount = 0;
+
+        // チャートタイプを更新
+        mainChart.config.type = chartType;
+        mainChart.update();
+
+        // データ更新インターバルを開始
+        dataInterval = setInterval(() => {
+          updateData(dataPoints);
+        }, speed);
+      }
+
+      // データ更新
+      function updateData(maxPoints) {
+        // 新しいデータを生成
+        const newValue = Math.random() * 100;
+        dataArray.push(newValue);
+        updateCount++;
+
+        // データポイント数を制限
+        if (dataArray.length > maxPoints) {
+          dataArray.shift();
+        }
+
+        // ラベルを更新
+        const labels = dataArray.map((_, index) => `T${index + 1}`);
+
+        // メインチャートを更新
+        mainChart.data.labels = labels;
+        mainChart.data.datasets[0].data = dataArray;
+        mainChart.update();
+
+        // 分布チャートを更新
+        updateDistributionChart();
+
+        // リアルタイムデータ表示を更新
+        updateRealTimeDisplay();
+      }
+
+      // 分布チャート更新
+      function updateDistributionChart() {
+        if (dataArray.length === 0) return;
+
+        const low = dataArray.filter((v) => v < 33).length;
+        const medium = dataArray.filter((v) => v >= 33 && v < 66).length;
+        const high = dataArray.filter((v) => v >= 66).length;
+
+        distributionChart.data.datasets[0].data = [low, medium, high];
+        distributionChart.update();
+      }
+
+      // リアルタイムデータ表示更新
+      function updateRealTimeDisplay() {
+        if (dataArray.length === 0) return;
+
+        const current = dataArray[dataArray.length - 1];
+        const average = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+        const max = Math.max(...dataArray);
+        const min = Math.min(...dataArray);
+
+        document.getElementById("currentValue").textContent =
+          current.toFixed(1);
+        document.getElementById("averageValue").textContent =
+          average.toFixed(1);
+        document.getElementById("maxValue").textContent = max.toFixed(1);
+        document.getElementById("minValue").textContent = min.toFixed(1);
+        document.getElementById("updateCount").textContent = updateCount;
+      }
+
+      // チャートタイプ変更時の処理
+      document
+        .getElementById("chartType")
+        .addEventListener("change", function () {
+          const chartType = this.value;
+          mainChart.config.type = chartType;
+          mainChart.update();
+        });
+
+      // データ速度変更時の処理
+      document
+        .getElementById("dataSpeed")
+        .addEventListener("change", function () {
+          if (dataInterval) {
+            startDemo();
+          }
+        });
+
+      // データポイント数変更時の処理
+      document
+        .getElementById("dataPoints")
+        .addEventListener("change", function () {
+          if (dataInterval) {
+            startDemo();
+          }
+        });
+    </script>
+  </body>
+</html>

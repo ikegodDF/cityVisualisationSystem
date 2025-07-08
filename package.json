@@ -1,0 +1,23 @@
+{
+  "name": "data-visualization-portfolio",
+  "version": "1.0.0",
+  "description": "データ可視化システムのポートフォリオ",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/index.html",
+    "start": "live-server --port=3000",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": [
+    "data-visualization",
+    "portfolio",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "開発者名",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}

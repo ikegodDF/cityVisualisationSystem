@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="システム開発ポートフォリオ - データ可視化システム"
+    />
+    <meta
+      name="keywords"
+      content="システム開発, ポートフォリオ, データ可視化, プログラミング"
+    />
+    <meta name="author" content="開発者名" />
+
+    <title>システム開発ポートフォリオ - データ可視化システム</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        transition: opacity 0.3s;
+      }
+
+      .nav-links a:hover {
+        opacity: 0.8;
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      .cta-button {
+        background: #ff6b6b;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+      }
+
+      /* Main Content */
+      .main {
+        padding: 4rem 0;
+      }
+
+      .section {
+        margin-bottom: 4rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        color: #2c3e50;
+      }
+
+      /* System Overview */
+      .system-overview {
+        background: white;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 3rem;
+      }
+
+      .overview-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .overview-text h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      .overview-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #555;
+      }
+
+      .system-image {
+        text-align: center;
+      }
+
+      .system-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Features */
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .feature-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      /* Tech Stack */
+      .tech-stack {
+        background: white;
+        padding: 3rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .tech-item {
+        text-align: center;
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+      }
+
+      .tech-item h4 {
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+      }
+
+      /* Footer */
+      .footer {
+        background: #2c3e50;
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 4rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .overview-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hero h1 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <a href="#" class="logo">データ可視化システム</a>
+          <ul class="nav-links">
+            <li><a href="#overview">概要</a></li>
+            <li><a href="#features">機能</a></li>
+            <li><a href="#tech">技術</a></li>
+            <li><a href="demo.html" class="cta-button">デモを見る</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>データ可視化システム</h1>
+        <p>リアルタイムデータを美しく、直感的に可視化する次世代システム</p>
+        <a href="demo.html" class="cta-button">デモを体験する</a>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="container">
+        <!-- System Overview -->
+        <section id="overview" class="section">
+          <h2 class="section-title">システム概要</h2>
+          <div class="system-overview">
+            <div class="overview-grid">
+              <div class="overview-text">
+                <h3>リアルタイムデータ可視化</h3>
+                <p>
+                  このシステムは、大量のデータをリアルタイムで収集・分析し、
+                  美しいグラフやチャートとして可視化します。
+                  ユーザーは直感的なインターフェースを通じて、
+                  複雑なデータパターンを簡単に理解することができます。
+                </p>
+                <p>
+                  セキュリティを重視し、機密データは適切に保護されています。
+                  デモページでは、実際のシステムの動作を安全に体験できます。
+                </p>
+              </div>
+              <div class="system-image">
+                <img
+                  src="https://via.placeholder.com/500x300/667eea/ffffff?text=システム+アーキテクチャ"
+                  alt="システムアーキテクチャ"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" class="section">
+          <h2 class="section-title">主要機能</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">📊</div>
+              <h3>リアルタイム可視化</h3>
+              <p>
+                データの変化をリアルタイムでグラフに反映し、動的な分析を可能にします。
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🔒</div>
+              <h3>セキュリティ保護</h3>
+              <p>機密データを適切に保護し、安全なデータ処理を実現します。</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📱</div>
+              <h3>レスポンシブデザイン</h3>
+              <p>
+                あらゆるデバイスで最適な表示を提供するレスポンシブなインターフェース。
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>高性能処理</h3>
+              <p>
+                大量のデータを高速で処理し、スムーズなユーザー体験を提供します。
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🎨</div>
+              <h3>カスタマイズ可能</h3>
+              <p>
+                ユーザーのニーズに合わせて、表示形式やレイアウトを自由にカスタマイズ。
+              </p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">📈</div>
+              <h3>分析機能</h3>
+              <p>
+                高度な分析機能により、データから価値のある洞察を引き出します。
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section id="tech" class="section">
+          <h2 class="section-title">使用技術</h2>
+          <div class="tech-stack">
+            <div class="tech-grid">
+              <div class="tech-item">
+                <h4>Frontend</h4>
+                <p>React.js, TypeScript, D3.js</p>
+              </div>
+              <div class="tech-item">
+                <h4>Backend</h4>
+                <p>Node.js, Express.js, MongoDB</p>
+              </div>
+              <div class="tech-item">
+                <h4>データ処理</h4>
+                <p>Python, Pandas, NumPy</p>
+              </div>
+              <div class="tech-item">
+                <h4>インフラ</h4>
+                <p>AWS, Docker, Kubernetes</p>
+              </div>
+              <div class="tech-item">
+                <h4>可視化</h4>
+                <p>Chart.js, Plotly, Three.js</p>
+              </div>
+              <div class="tech-item">
+                <h4>セキュリティ</h4>
+                <p>JWT, HTTPS, データ暗号化</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2024 データ可視化システム. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
