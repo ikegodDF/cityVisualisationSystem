@@ -26,7 +26,6 @@
             <li><a href="#overview">概要</a></li>
             <li><a href="#features">機能</a></li>
             <li><a href="#tech">技術</a></li>
-            <li><a href="cesium.html" class="cta-button">デモを見る</a></li>
           </ul>
         </nav>
       </div>
@@ -37,7 +36,7 @@
       <div class="container">
         <h1>データ可視化システム</h1>
         <p>リアルタイムデータを美しく、直感的に可視化する次世代システム</p>
-        <a href="demo.html" class="cta-button">デモを体験する</a>
+        <button id="openTokenModal" class="cta-button">デモを体験する</button>
       </div>
     </section>
 
@@ -253,5 +252,22 @@
         <p>&copy; 2024 データ可視化システム. All rights reserved.</p>
       </div>
     </footer>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Cesium.ionのアクセストークンを入力してください</h3>
+        <input type="text" id="tokenInput" />
+        <div class="goToCesium">
+          <button id="saveToken" class="cta-button">デモ画面を開く</button>
+        </div>
+        <h5 style="margin-top: 20px">
+          ※地球が表示されない場合はトークンが無効です。やり直してください
+        </h5>
+      </div>
+    </div>
+
+    <script src="modal.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@
 
 const viewer = (function () {
   // Cesium IONアクセストークンを設定
-  Cesium.Ion.defaultAccessToken = "";
+  Cesium.Ion.defaultAccessToken = localStorage.getItem("cesiumToken");
   const viewer = new Cesium.Viewer("CesiumContainer");
 
   // カメラの初期位置を設定(俯瞰)
