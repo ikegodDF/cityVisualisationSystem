@@ -1,0 +1,45 @@
+#legend {
+  position: absolute;
+  top: 220px; /* #slider の下に配置 */
+  left: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+#legend h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+#legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#legend li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.legend-color {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 3px;
+}
+
+.legend-color_mesh {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 3px;
+  opacity: 0.75; /* 不透明度を0.75に設定 */
+}

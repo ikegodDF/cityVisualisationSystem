@@ -1,0 +1,127 @@
+#runDemolitionRevival {
+  position: absolute;
+  top: 60px; /* 上からの距離 */
+  left: 100px; /* 左からの距離 (戻るボタンの幅を考慮) */
+  z-index: 10; /* Cesiumのキャンバスより上に表示 */
+}
+
+#undoButton {
+  position: absolute;
+  top: 60px; /* 上からの距離 */
+  left: 20px; /* 左からの距離 */
+  z-index: 10; /* Cesiumのキャンバスより上に表示 */
+}
+
+#output {
+  position: absolute;
+  top: 100px; /* ボタンの下に配置 */
+  left: 40px; /* 左からの距離 */
+  z-index: 10; /* Cesiumのキャンバスより上に表示 */
+  background: rgba(255, 255, 255, 0.8); /* 背景を半透明に */
+  padding: 10px; /* 内側の余白 */
+  border-radius: 5px; /* 角を丸くする */
+}
+
+#futurePrediction {
+  position: absolute;
+  top: 20px;
+  left: 45px;
+  z-index: 20;
+}
+
+#changeModel {
+  position: absolute;
+  top: 100px; /* 最初に配置 */
+  left: 50px;
+  z-index: 10;
+}
+
+#earthquakePrediction {
+  position: absolute;
+  top: 140px; /* #changeModel の下に配置 */
+  left: 50px;
+  z-index: 10;
+}
+
+#thunamiPrediction {
+  position: absolute;
+  top: 180px; /* #earthquakePrediction の下に配置 */
+  left: 50px;
+  z-index: 10;
+}
+
+#slider {
+  position: absolute;
+  top: 220px; /* #thunamiPrediction の下に配置 */
+  left: 50px;
+  z-index: 10;
+  pointer-events: auto; /* クリック可能にする */
+}
+
+#kaisekibutton {
+  position: absolute;
+  top: 100px; /* #earthquakePrediction の下に配置 */
+  right: 50px;
+  z-index: 10;
+}
+
+#screenshotButton {
+  position: absolute;
+  top: 200px; /* #earthquakePrediction の下に配置 */
+  right: 50px;
+  z-index: 10;
+}
+
+/* スライダー全体のスタイル */
+.slider-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 40px;
+}
+
+.slider-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  border: 1px solid #999;
+  border-radius: 20px;
+  padding: 0 5px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s;
+  margin-left: -20px; /* 左に10pxずらす */
+}
+
+.slider-button span {
+  color: black;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+.slider-indicator {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* 状態が「はい」の場合 */
+.slider-button.active {
+  background-color: #4caf50;
+}
+
+.slider-button .slider-indicator {
+  transform: translateX(0px);
+}
+
+.slider-button.active .slider-indicator {
+  transform: translateX(50px);
+}
